@@ -12,15 +12,15 @@ const QuestionList = ({course}: QuestionListProps) => {
 
     return (
         <div>
-            <h1>Question list</h1>
+            {!course && <p className={'text-center display-4 my-4'}>Please select course!</p>}
 
-            {!course && <div>Please select course!</div>}
-
-            {
-                course && questions && questions.map((question, index) => (
-                    <Question key={index} {...question} />
-                ))
-            }
+            <div className={'list-group my-4'}>
+                {
+                    course && questions && questions.map((question, index) => (
+                        <Question key={index} {...question} />
+                    ))
+                }
+            </div>
         </div>
     );
 };

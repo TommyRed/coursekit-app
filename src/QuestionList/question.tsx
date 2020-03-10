@@ -12,7 +12,7 @@ interface QuestionProps {
     answerList: Array<any | string | Array<any>>
     correctAnswerIndex?: number
     correctAnswerIndexList?: Array<number>
-    pairList?: Array<{answerIndex: number, pairAnswerIndex: number}>
+    pairList?: Array<{ answerIndex: number, pairAnswerIndex: number }>
 }
 
 const parseString = (str: any, language: string = 'en') => {
@@ -32,17 +32,17 @@ const parseString = (str: any, language: string = 'en') => {
 
 const Question = ({task, code, instruction, type, answerList, correctAnswerIndex, correctAnswerIndexList, pairList}: QuestionProps) => {
 
-    const isGroupList = answerList.every(s => s instanceof Array);
+    const isGroupList = answerList && answerList.every(s => s instanceof Array);
 
     switch (type) {
         case 'T01':
         case 'T02':
             return (
-                <div key={code}>
+                <div key={code} className={'list-item'}>
 
-                    <p>{parseString(instruction)}</p>
+                    <p className={'lead'}>{parseString(instruction)}</p>
                     <p>{parseString(task)}</p>
-                    <p>{parseString(answerList[correctAnswerIndex || 0])}</p>
+                    <p className={'alert alert-success'}>{parseString(answerList[correctAnswerIndex || 0])}</p>
 
                     <hr/>
 
@@ -51,17 +51,15 @@ const Question = ({task, code, instruction, type, answerList, correctAnswerIndex
 
         case 'T03':
             return (
-                <div key={code}>
+                <div key={code} className={'list-item'}>
 
-                    <p>{parseString(instruction)}</p>
+                    <p className={'lead'}>{parseString(instruction)}</p>
                     <p>{parseString(task)}</p>
-                    <p>
+                    <p className={'alert alert-success'}>
                         {correctAnswerIndexList?.map((i) => (
-                            <>
-                                <br/>
-                                <span>
+                            <p className={'mb-0'}>
                                 {parseString(answerList[i])}
-                            </span></>
+                            </p>
                         ))}
                     </p>
 
@@ -72,11 +70,11 @@ const Question = ({task, code, instruction, type, answerList, correctAnswerIndex
 
         case 'T06':
             return (
-                <div key={code}>
+                <div key={code} className={'list-item'}>
 
-                    <p>{parseString(instruction)}</p>
+                    <p className={'lead'}>{parseString(instruction)}</p>
                     <p>{parseString(task)}</p>
-                    <p>
+                    <p className={'alert alert-success'}>
                         {pairList?.map(({answerIndex, pairAnswerIndex}) => {
 
                             const a = isGroupList ? answerList[0][answerIndex] : answerList[answerIndex];
@@ -84,11 +82,8 @@ const Question = ({task, code, instruction, type, answerList, correctAnswerIndex
                             const b = isGroupList ? answerList[1][pairAnswerIndex] : answerList[pairAnswerIndex];
 
                             return (
-                                <>
-                                    <span>{`${parseString(a)} => ${parseString(b)}`}</span>
-                                    <br/>
-                                </>
-                            )
+                                <p className={'mb-0'}>{`${parseString(a)} => ${parseString(b)}`}</p>
+                            );
                         })}
                     </p>
 
@@ -99,10 +94,12 @@ const Question = ({task, code, instruction, type, answerList, correctAnswerIndex
 
         default:
             return (
-                <div>
+                <div className={'list-item'}>
+                    <p className={'lead'}>{parseString(instruction)}</p>
                     <pre>
                         {JSON.stringify(task, null, 2)}
                     </pre>
+                    <hr/>
                 </div>
             );
     }
