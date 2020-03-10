@@ -15,7 +15,7 @@ const CourseList = ({onClick}: CourseListProps) => {
 
             {
                 courses ? courses.map(({code}) => (
-                    <button onClick={() => onClick(code)}>{code}</button>
+                    <button key={code} onClick={() => onClick(code)}>{code}</button>
                 )) : 'No course'
             }
         </div>

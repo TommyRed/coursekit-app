@@ -8,7 +8,7 @@ interface QuestionListProps {
 
 const QuestionList = ({course}: QuestionListProps) => {
 
-    const {questions} = useApi(course);
+    const { questions } = useApi(course);
 
     return (
         <div>
